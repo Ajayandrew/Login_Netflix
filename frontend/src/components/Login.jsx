@@ -15,7 +15,11 @@ export default function Login() {
       return;
     }
     try {
-      const res = await axios.post("/api/login",{ email, password });
+      // Use local backend in development, Vercel API in production
+      const apiUrl = import.meta.env.DEV
+        ? "http://localhost:5000/login"
+        : "/api/login";
+      const res = await axios.post(apiUrl, { email, password });
       if (res.data.success) {
         navigate("/dashboard");
       } else {
