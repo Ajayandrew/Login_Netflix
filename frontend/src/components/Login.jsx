@@ -15,7 +15,7 @@ export default function Login() {
       return;
     }
     try {
-      const res = await axios.post("https://login-netflix-7163.onrender.com",{ email, password });
+      const res = await axios.post("https://login-netflix-7163.onrender.com/login",{ email, password });
       if (res.data.success) {
         navigate("/dashboard");
       } else {
