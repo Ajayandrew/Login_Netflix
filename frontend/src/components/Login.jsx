@@ -15,7 +15,7 @@ export default function Login() {
       return;
     }
     try {
-      const res = await axios.post("https://login-ajay-thangam.vercel.app/",{ email, password });
+      const res = await axios.post("https://login-ajay-thangam-app.vercel.app/login",{ email, password });
       if (res.data.success) {
         navigate("/dashboard");
       } else {
