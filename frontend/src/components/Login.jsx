@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -7,20 +8,21 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setError("Please enter both email and password");
       return;
     }
-    // Simple client-side authentication (no API call)
-    const validEmail = "laddu@netflix.com";
-    const validPassword = "Thangam@91";
-
-    if (email === validEmail && password === validPassword) {
-      navigate("/dashboard");
-    } else {
-      navigate("/failed");
+    try {
+      const res = await axios.post("http://localhost:5000/login", { email, password });
+      if (res.data.success) {
+        navigate("/dashboard");
+      } else {
+        navigate("/failed");
+      }
+    } catch (error) {
+      setError("Server error. Try again.");
     }
   };
 
