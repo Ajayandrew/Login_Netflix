@@ -15,7 +15,7 @@ export default function Login() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/login",{ email, password });
+      const res = await axios.post("https://login-ajay-thangam.vercel.app/",{ email, password });
       if (res.data.success) {
         navigate("/dashboard");
       } else {
@@ -30,7 +30,7 @@ export default function Login() {
     <div className="min-h-screen bg-linear-to-b from-red-950 via-red-950 to-black text-white">
 
       <nav className="w-full p-6 border-b border-gray-700">
-        <h1 className="text-red-600 text-4xl font-bold px-16">NETFLIX</h1>
+        <h1 className="text-red-600 text-4xl font-bold px-16">NETFLIEX</h1>
       </nav>
 
       <div className="flex items-center justify-center mt-12">
