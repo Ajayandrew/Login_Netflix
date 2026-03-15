@@ -33,9 +33,9 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-linear-to-b from-red-950 via-black to-black text-white">
       {/* Navbar line only */}
-      <nav className="w-full px-12 py-6 border-b border-gray-700 flex justify-between items-center">
-        <h1 className="text-red-600 text-3xl font-bold">NETFLIX</h1>
-        <div className="space-x-6 flex items-center">
+      <nav className="w-full px-4 md:px-12 py-6 border-b border-gray-700 flex justify-between items-center">
+        <h1 className="text-red-600 text-2xl md:text-3xl font-bold">NETFLIX</h1>
+        <div className="hidden md:flex md:space-x-6 md:items-center">
           <button className="hover:text-red-500">Home</button>
           <button className="hover:text-red-500">Gallery</button>
 
@@ -46,18 +46,25 @@ export default function Dashboard() {
             Logout
           </button>
         </div>
+        {/* Mobile logout button */}
+        <button
+          onClick={handleLogout}
+          className="md:hidden bg-red-600 hover:bg-red-700 px-3 py-2 rounded font-semibold text-sm"
+        >
+          Logout
+        </button>
       </nav>
 
       {/* Hero Section */}
-      <div className="text-center mt-12">
-        <h2 className="text-4xl font-bold mb-4">Women’s Day Showcase</h2>
-        <p className="text-gray-300 mb-8">
+      <div className="text-center mt-8 md:mt-12 px-4">
+        <h2 className="text-2xl md:text-4xl font-bold mb-4">Women’s Day Showcase</h2>
+        <p className="text-gray-300 mb-6 md:mb-8 text-sm md:text-base px-2">
           Celebrating strength, creativity, and inspiration through images.
         </p>
       </div>
 
       {/* Image Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4 md:px-12">
         {images.map((src, index) => (
           <div
             key={index}
