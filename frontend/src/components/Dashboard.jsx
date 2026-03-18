@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaDownload } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
 import img3 from "../assets/3.jpg";
@@ -11,60 +14,47 @@ import img8 from "../assets/8.jpeg";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleLogout = () => {
-    // Clear any stored session data if needed
     localStorage.removeItem("token");
-    // Redirect back to login
     navigate("/login");
   };
 
-  const images = [
-    img9,
-    img1,
-    img2,
-    img3,
-    img8,
-    img5,
-    img6,
-    img7,
-  ];
+  const images = [img9, img1, img2, img3, img8, img5, img6, img7];
+
+  const handleDownload = (img) => {
+    const link = document.createElement("a");
+    link.href = img;
+    link.download = "image.jpg";
+    link.click();
+  };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-red-950 via-black to-black text-white">
-      {/* Navbar line only */}
+    <div className="min-h-screen bg-gradient-to-b from-red-950 via-black to-black text-white">
+      
+      {/* Navbar */}
       <nav className="w-full px-4 md:px-12 py-6 border-b border-gray-700 flex justify-between items-center">
         <h1 className="text-red-600 text-2xl md:text-3xl font-bold">NETFLIX</h1>
-        <div className="hidden md:flex md:space-x-6 md:items-center">
-          <button className="hover:text-red-500">Home</button>
-          <button className="hover:text-red-500">Gallery</button>
 
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold"
-          >
-            Logout
-          </button>
-        </div>
-        {/* Mobile logout button */}
         <button
           onClick={handleLogout}
-          className="md:hidden bg-red-600 hover:bg-red-700 px-3 py-2 rounded font-semibold text-sm"
+          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold"
         >
           Logout
         </button>
       </nav>
 
-      {/* Hero Section */}
-      <div className="text-center mt-8 md:mt-12 px-4">
-        <h2 className="text-2xl md:text-4xl font-bold mb-4">Women’s Day Showcase</h2>
-        <p className="text-gray-300 mb-6 md:mb-8 text-sm md:text-base px-2">
-          Celebrating strength, creativity, and inspiration through images.
+      {/* Hero */}
+      <div className="text-center mt-10">
+        <h2 className="text-3xl font-bold mb-4">Women’s Day Showcase</h2>
+        <p className="text-gray-300">
+          Celebrating strength and inspiration.
         </p>
       </div>
 
       {/* Image Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4 md:px-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 px-6 mt-8">
         {images.map((src, index) => (
           <div
             key={index}
@@ -72,18 +62,69 @@ export default function Dashboard() {
           >
             <img
               src={src}
-              alt={`Women's Day ${index + 1}`}
-              className="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500"
+              alt=""
+              className="w-full h-60 object-cover group-hover:scale-110 transition duration-500"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition duration-500">
-              <p className="text-white font-semibold">View Details</p>
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-4 transition">
+              
+              {/* View Icon */}
+              <button
+                onClick={() => setSelectedImage(src)}
+                className="bg-white text-black p-3 rounded-full hover:scale-110 transition"
+              >
+                👁️
+              </button>
+
+              {/* Download Icon */}
+              <button
+                onClick={() => handleDownload(src)}
+                className="bg-red-600 text-white p-3 rounded-full hover:scale-110 transition"
+              >
+                <FaDownload size={18} />
+              </button>
+
             </div>
           </div>
         ))}
       </div>
 
+      {/* Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+
+          <div className="relative">
+
+            <img
+              src={selectedImage}
+              alt=""
+              className="max-w-[90vw] max-h-[80vh] rounded-lg shadow-lg"
+            />
+
+            {/* Close Icon */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-3 right-3 bg-red-600 p-2 rounded-full text-white hover:scale-110 transition"
+            >
+              <IoClose size={24} />
+            </button>
+
+            {/* Download Icon */}
+            <button
+              onClick={() => handleDownload(selectedImage)}
+              className="absolute bottom-3 right-3 bg-white text-black p-2 rounded-full hover:scale-110 transition"
+            >
+              <FaDownload size={20} />
+            </button>
+
+          </div>
+
+        </div>
+      )}
+
       {/* Footer */}
-      <footer className="border-t border-gray-700 py-4 text-center text-gray-400 text-sm mt-12">
+      <footer className="text-center text-gray-400 mt-10 pb-4">
         © 2026 Women’s Day Gallery — Designed by Ajay
       </footer>
     </div>
